@@ -1,16 +1,24 @@
 PODS:
   - Alamofire (5.6.2)
+  - AuthSDK (0.1.0):
+    - R.swift
+    - UIComponents
   - R.swift (7.3.0)
   - SnapKit (5.6.0)
   - SwiftLint (0.51.0)
   - Then (3.0.0)
+  - UIComponents (0.1.0):
+    - R.swift
+    - SnapKit
 
 DEPENDENCIES:
   - Alamofire
-  - R.swift
+  - AuthSDK (from `./Frameworks/AuthSDK`)
+  - R.swift (~> 7)
   - SnapKit (~> 5)
-  - SwiftLint
+  - SwiftLint (~> 0)
   - Then
+  - UIComponents (from `./Frameworks/UIComponents`)
 
 SPEC REPOS:
   trunk:
@@ -20,13 +28,21 @@ SPEC REPOS:
     - SwiftLint
     - Then
 
+EXTERNAL SOURCES:
+  AuthSDK:
+    :path: "./Frameworks/AuthSDK"
+  UIComponents:
+    :path: "./Frameworks/UIComponents"
+
 SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  AuthSDK: 2ebc86e5f6660cef8505ed49733b126e751fdcfb
   R.swift: cef1c530541cb49412752721797f10dae6b32d11
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftLint: 1b7561918a19e23bfed960e40759086e70f4dba5
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
+  UIComponents: e113592a429b1740ccef86910ceedfb4e245a923
 
-PODFILE CHECKSUM: 561b39677400f604e77cf5f3e4997483168c82c8
+PODFILE CHECKSUM: 5dcfc69837e602913e4e58f7bf79ff7b86cae481
 
 COCOAPODS: 1.11.3

@@ -1,0 +1,33 @@
+{
+  "name": "AuthSDK",
+  "module_name": "AuthSDK",
+  "version": "0.1.0",
+  "summary": "A short description of AuthSDK.",
+  "swift_versions": "5.0",
+  "homepage": "https://github.com/Ribeyrak/AuthSDK",
+  "license": "MCI",
+  "authors": {
+    "VP": "https://github.com/Ribeyrak"
+  },
+  "source": {
+    "git": "https://github.com/Ribeyrak/AuthSDK.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "14.0"
+  },
+  "source_files": "**/*.{swift,h,m,xib,storyboard}",
+  "resources": [
+    "Resources/*.{strings,xcassets,stringsdict}",
+    "Resources/**/*.{strings,stringsdict}"
+  ],
+  "dependencies": {
+    "R.swift": [
+
+    ],
+    "UIComponents": [
+
+    ]
+  },
+  "swift_version": "5.0"
+}

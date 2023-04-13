@@ -9,4 +9,7 @@ pod 'Then'
 pod 'R.swift','~> 7'
 pod 'SwiftLint','~> 0'
 
+pod 'UIComponents', :path => './Frameworks/UIComponents'
+pod 'AuthSDK', :path => './Frameworks/AuthSDK'
+
 end

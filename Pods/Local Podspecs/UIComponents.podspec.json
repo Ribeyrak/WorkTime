@@ -1,0 +1,33 @@
+{
+  "name": "UIComponents",
+  "module_name": "UIComponents",
+  "version": "0.1.0",
+  "summary": "A short description of UIComponents.",
+  "swift_versions": "5.0",
+  "homepage": "https://github.com/Ribeyrak/UIComponents",
+  "license": "MCI",
+  "authors": {
+    "VP": "https://github.com/Ribeyrak"
+  },
+  "source": {
+    "git": "https://github.com/Ribeyrak/UIComponents.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "14.0"
+  },
+  "source_files": "**/*.{swift,h,m,xib,storyboard}",
+  "resources": [
+    "Resources/*.{strings,xcassets,stringsdict}",
+    "Resources/**/*.{strings,stringsdict}"
+  ],
+  "dependencies": {
+    "R.swift": [
+
+    ],
+    "SnapKit": [
+
+    ]
+  },
+  "swift_version": "5.0"
+}
