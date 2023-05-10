@@ -23,7 +23,11 @@ open class WTTitleSwitchView: BaseView {
     
     private let animateTimeInterval: TimeInterval = 0.3
     
-    public var state = ActivityState.left
+    public var state = ActivityState.left {
+        didSet {
+            animateStateSetting()
+        }
+    }
     
     public var titles: (leftTitle: String, rightTitle: String)? = nil {
         didSet {
@@ -71,10 +75,11 @@ private extension WTTitleSwitchView {
         
         rightButton.setTitleColor(.black, for: .normal)
         rightButton.addTarget(self, action: #selector(rightButtonHandler), for: .touchUpInside)
+        rightButton.alpha = 0.3
         
         rightButton.snp.makeConstraints {
             $0.leading.equalTo(buttonSeparatorView.snp.trailing).offset(5)
-            $0.trailing.bottom.equalToSuperview()
+            $0.trailing.verticalEdges.equalToSuperview()
         }
     }
 }
@@ -82,27 +87,53 @@ private extension WTTitleSwitchView {
 public extension WTTitleSwitchView {
     @IBAction func leftButtonHandler() {
         if state == .right {
-            animateButtonSeparatorViewByTap()
+            state = .left
             print("leftButtonHandler")
         }
     }
     
     @IBAction func rightButtonHandler() {
         if state == .left {
-            animateButtonSeparatorViewByTap()
+            state = .right
             print("rightButtonHandler")
         }
     }
 }
 
 private extension WTTitleSwitchView {
-    func animateButtonSeparatorViewByTap() {
+    func animateStateSetting() {
+        let activeButton = state == .left ? rightButton : leftButton
+        let inactiveButton = state == .left ? leftButton : rightButton
         
-        UIView.animate(withDuration: animateTimeInterval) {
-            self.buttonSeparatorView.alpha = 0
+        UIView.animate(withDuration: animateTimeInterval / 2) { // Reset alpha
+            activeButton.alpha = 0.3
+            self.buttonSeparatorView.alpha = 0.3
+            
         } completion: { _ in
-            UIView.animate(withDuration: self.animateTimeInterval) {
+            UIView.animate(withDuration: self.animateTimeInterval) { // Set position
                 self.buttonSeparatorView.alpha = 1
+                inactiveButton.alpha = 1
+                
+                inactiveButton.snp.remakeConstraints {
+                    $0.verticalEdges.leading.equalToSuperview()
+                }
+                
+                self.buttonSeparatorView.snp.remakeConstraints {
+                    $0.centerY.equalTo(inactiveButton)
+                    $0.leading.equalTo(inactiveButton.snp.trailing).offset(5)
+                }
+                
+                activeButton.snp.remakeConstraints {
+                    $0.verticalEdges.trailing.equalToSuperview()
+                    $0.leading.equalTo(self.buttonSeparatorView.snp.trailing).offset(5)
+                }
+                self.layoutIfNeeded()
+                
+            } completion: { _ in
+                UIView.animate(withDuration: self.animateTimeInterval / 2) { // Set alpha
+                    self.buttonSeparatorView.alpha = 1
+                    inactiveButton.alpha = 1
+                }
             }
         }
     }
