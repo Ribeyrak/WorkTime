@@ -95,6 +95,7 @@
 		C2E3934ECAF5D165EB1D1C57DAD09624 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F7BDA56B79B1EB87CB1F71D6C5D5FE /* AuthViewController.swift */; };
 		C3BB6EA8FFDF1A6DD190C545D9CCE7C5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739C2832C6A21A43932DEA157874F238 /* Constants.swift */; };
 		C8897FEC29E85DC5000CF099 /* WTAuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8897FEB29E85DC5000CF099 /* WTAuthTextField.swift */; };
+		C8C4F2422A0BD83B00B96014 /* WTTitleSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4F2412A0BD83B00B96014 /* WTTitleSwitchView.swift */; };
 		CAEE6B4F8586326E4BC9B040AFDDFB59 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		CEC46FD8DD1DA0837201E818262C799B /* AuthSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AEA8BAC745A284597C0A5A64806DE8B /* AuthSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D15ADE6ABBF5CF3B5120F6FB30AE3E80 /* NibResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D80D35AEFFA1526606E3C1EA5363457 /* NibResource.swift */; };
@@ -298,6 +299,7 @@
 		C58D182CE1F2C5EEBAC367FDDA0842A7 /* Then-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Then-dummy.m"; sourceTree = "<group>"; };
 		C843A754796659EE919349B1DA4ACA09 /* LocaleReference.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LocaleReference.swift; path = Sources/RswiftResources/Shared/LocaleReference.swift; sourceTree = "<group>"; };
 		C8897FEB29E85DC5000CF099 /* WTAuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WTAuthTextField.swift; sourceTree = "<group>"; };
+		C8C4F2412A0BD83B00B96014 /* WTTitleSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WTTitleSwitchView.swift; sourceTree = "<group>"; };
 		CB85EEB40D5DC91CD634FCC81464E1A1 /* ConstraintMultiplierTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMultiplierTarget.swift; path = Sources/ConstraintMultiplierTarget.swift; sourceTree = "<group>"; };
 		CD04C1BC4DEF5AC953642EA8EA668310 /* Pods-WorkTime-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-WorkTime-acknowledgements.plist"; sourceTree = "<group>"; };
 		CE61C2C3FA714AEB533AD6574BAECAD1 /* R.swift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = R.swift.modulemap; sourceTree = "<group>"; };
@@ -608,9 +610,8 @@
 		B2D956F1C300E3BD75F1072C9921B50D /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				C8897FEA29E85D70000CF099 /* Base */,
 				C8897FEB29E85DC5000CF099 /* WTAuthTextField.swift */,
-				7BEC86566B17128B4792F22C4EB4FEA5 /* UIComponents-Bridging-Header.h */,
+				C8897FEA29E85D70000CF099 /* Base */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -660,6 +661,7 @@
 			isa = PBXGroup;
 			children = (
 				739C2832C6A21A43932DEA157874F238 /* Constants.swift */,
+				7BEC86566B17128B4792F22C4EB4FEA5 /* UIComponents-Bridging-Header.h */,
 				B2D956F1C300E3BD75F1072C9921B50D /* Components */,
 				4FEF2A96A2B3A70C3D6F3CFB14A291EA /* Pod */,
 				7FB151D4A982569DD1CBC3D47CC3FCF0 /* Support Files */,
@@ -719,6 +721,7 @@
 			children = (
 				21EB6FB4BB01B068FF8DBF8FE32B66E4 /* BaseView.swift */,
 				186DCEA36379DC8BA3E69AA4931F7954 /* BaseViewController.swift */,
+				C8C4F2412A0BD83B00B96014 /* WTTitleSwitchView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1054,6 +1057,7 @@
 				30A9C16E118B01C5A61E9EB7AB2C4C3B /* BaseViewController.swift in Sources */,
 				C8897FEC29E85DC5000CF099 /* WTAuthTextField.swift in Sources */,
 				C3BB6EA8FFDF1A6DD190C545D9CCE7C5 /* Constants.swift in Sources */,
+				C8C4F2422A0BD83B00B96014 /* WTTitleSwitchView.swift in Sources */,
 				D616BB04F4ED391F3D0F1F95C6E60051 /* UIComponents-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
