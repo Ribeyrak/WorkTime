@@ -12,16 +12,22 @@ extension WTTitleSwitchView {
     public enum ActivityState {
         case left
         case right
+        
+        mutating func toggle() {
+            self = self == .left ? .right : .left
+        }
     }
 }
 
 open class WTTitleSwitchView: BaseView {
+    private let firstLabel = UILabel()
+    private let separatorView = UILabel()
+    private let secondLabel = UILabel()
+    private let button = UIButton()
     
-    private let leftButton = UIButton()
-    private let buttonSeparatorView = UILabel()
-    private let rightButton = UIButton()
-    
-    private let animateTimeInterval: TimeInterval = 0.3
+    private let animationTimeInterval: TimeInterval = 0.3
+    private var animationPoint: CGFloat = 0
+    private var animationTimer = Timer()
     
     public var state = ActivityState.left {
         didSet {
@@ -29,112 +35,129 @@ open class WTTitleSwitchView: BaseView {
         }
     }
     
-    public var titles: (leftTitle: String, rightTitle: String)? = nil {
+    public var titles: (firstTitle: String, secondTitle: String)? = nil {
         didSet {
-            leftButton.setTitle(titles?.leftTitle, for: .normal)
-            rightButton.setTitle(titles?.rightTitle, for: .normal)
+            firstLabel.text = titles?.firstTitle
+            secondLabel.text = titles?.secondTitle
         }
     }
     
     override func setup() {
         super.setup()
         
-        setupLeftButton()
-        setupButtonSeparatorView()
-        setupRightButton()
+        setupSeparatorView()
+        setupFirstLabel()
+        setupSecondLabel()
+        setupButton()
     }
 }
 
 // MARK: - Setup UI
 private extension WTTitleSwitchView {
-    func setupLeftButton() {
-        addSubview(leftButton)
+    func setupSeparatorView() {
+        addSubview(separatorView)
+        separatorView.text = "/"
+        separatorView.font = .systemFont(ofSize: 30, weight: .medium)
         
-        leftButton.setTitleColor(.black, for: .normal)
-        leftButton.addTarget(self, action: #selector(leftButtonHandler), for: .touchUpInside)
-        
-        leftButton.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
-            $0.leading.equalToSuperview()
+        separatorView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
         }
     }
     
-    func setupButtonSeparatorView() {
-        addSubview(buttonSeparatorView)
+    func setupFirstLabel() {
+        addSubview(firstLabel)
+        firstLabel.font = .systemFont(ofSize: 30, weight: .medium)
+        firstLabel.layoutMargins.bottom = 0
         
-        buttonSeparatorView.text = "/"
-        
-        buttonSeparatorView.snp.makeConstraints {
-            $0.centerY.equalTo(leftButton)
-            $0.leading.equalTo(leftButton.snp.trailing).offset(5)
+        firstLabel.snp.makeConstraints {
+            $0.bottom.leading.equalToSuperview()
+            $0.trailing.equalTo(separatorView.snp.leading).offset(-10)
         }
     }
     
-    func setupRightButton() {
-        addSubview(rightButton)
+    func setupSecondLabel() {
+        addSubview(secondLabel)
+        secondLabel.font = .systemFont(ofSize: 20, weight: .regular)
+        secondLabel.layoutMargins.bottom = 0
+        secondLabel.alpha = 0.3
         
-        rightButton.setTitleColor(.black, for: .normal)
-        rightButton.addTarget(self, action: #selector(rightButtonHandler), for: .touchUpInside)
-        rightButton.alpha = 0.3
+        secondLabel.snp.makeConstraints {
+            $0.trailing.equalToSuperview()
+            $0.leading.equalTo(separatorView.snp.trailing).offset(10)
+            $0.bottom.equalToSuperview().inset(2.5)
+        }
+    }
+    
+    func setupButton() {
+        addSubview(button)
+        button.addTarget(self, action: #selector(buttonHandler), for: .touchUpInside)
         
-        rightButton.snp.makeConstraints {
-            $0.leading.equalTo(buttonSeparatorView.snp.trailing).offset(5)
-            $0.trailing.verticalEdges.equalToSuperview()
+        button.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
 }
 
 public extension WTTitleSwitchView {
-    @IBAction func leftButtonHandler() {
-        if state == .right {
-            state = .left
-            print("leftButtonHandler")
-        }
-    }
-    
-    @IBAction func rightButtonHandler() {
-        if state == .left {
-            state = .right
-            print("rightButtonHandler")
-        }
+    @IBAction func buttonHandler() {
+        state.toggle()
     }
 }
 
 private extension WTTitleSwitchView {
     func animateStateSetting() {
-        let activeButton = state == .left ? rightButton : leftButton
-        let inactiveButton = state == .left ? leftButton : rightButton
+        let activeLabel = state == .left ? secondLabel : firstLabel
+        let inactiveLabel = state == .left ? firstLabel : secondLabel
         
-        UIView.animate(withDuration: animateTimeInterval / 2) { // Reset alpha
-            activeButton.alpha = 0.3
-            self.buttonSeparatorView.alpha = 0.3
-            
+        // MARK: - Separator animation
+        UIView.animate(withDuration: animationTimeInterval / 4) {
+            self.separatorView.alpha = 0.1
         } completion: { _ in
-            UIView.animate(withDuration: self.animateTimeInterval) { // Set position
-                self.buttonSeparatorView.alpha = 1
-                inactiveButton.alpha = 1
-                
-                inactiveButton.snp.remakeConstraints {
-                    $0.verticalEdges.leading.equalToSuperview()
-                }
-                
-                self.buttonSeparatorView.snp.remakeConstraints {
-                    $0.centerY.equalTo(inactiveButton)
-                    $0.leading.equalTo(inactiveButton.snp.trailing).offset(5)
-                }
-                
-                activeButton.snp.remakeConstraints {
-                    $0.verticalEdges.trailing.equalToSuperview()
-                    $0.leading.equalTo(self.buttonSeparatorView.snp.trailing).offset(5)
-                }
-                self.layoutIfNeeded()
-                
-            } completion: { _ in
-                UIView.animate(withDuration: self.animateTimeInterval / 2) { // Set alpha
-                    self.buttonSeparatorView.alpha = 1
-                    inactiveButton.alpha = 1
-                }
+            UIView.animate(withDuration: self.animationTimeInterval / 4, delay: self.animationTimeInterval / 2) {
+                self.separatorView.alpha = 1
             }
         }
+        
+        // MARK: - Label transition animation
+        UIView.animate(withDuration: animationTimeInterval) {
+            activeLabel.alpha = 0.3
+            inactiveLabel.alpha = 1
+            
+            inactiveLabel.snp.remakeConstraints {
+                $0.bottom.leading.equalToSuperview()
+                $0.trailing.equalTo(self.separatorView.snp.leading).offset(-10)
+            }
+            
+            activeLabel.snp.remakeConstraints {
+                $0.trailing.equalToSuperview()
+                $0.leading.equalTo(self.separatorView.snp.trailing).offset(10)
+                $0.bottom.equalToSuperview().inset(2.5)
+            }
+            self.layoutIfNeeded()
+        }
+        
+        // MARK: - Label transformation animation
+        animationTimer.invalidate()
+        animationTimer = Timer.scheduledTimer(withTimeInterval: animationTimeInterval / 25,
+                                              repeats: true,
+                                              block: { timer in
+            if self.animationPoint < 10 {
+                self.animationPoint += 0.4
+                
+                let inactiveSize = 20 + self.animationPoint
+                inactiveLabel.font = inactiveSize > 25
+                    ? .systemFont(ofSize: inactiveSize, weight: .medium)
+                    : .systemFont(ofSize: inactiveSize, weight: .regular)
+                
+                let activeSize = 30 - self.animationPoint
+                activeLabel.font = activeSize < 25
+                    ? .systemFont(ofSize: activeSize, weight: .regular)
+                    : .systemFont(ofSize: activeSize, weight: .medium)
+                
+            } else {
+                timer.invalidate()
+                self.animationPoint = 0
+            }
+        })
     }
 }
